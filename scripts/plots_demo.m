@@ -7,13 +7,14 @@ base_clock = 10.23e6;
 f_carrier = 154 .* base_clock;
 f_chip = base_clock / 10;
 
-ROOTDIR = fileparts(get_lib_path);
+ROOTDIR = pwd;
+% ROOTDIR = fileparts(get_lib_path);
 almFile = strcat(ROOTDIR,'/files/almanac/W918.alm');
 ephFile = strcat(ROOTDIR,'/files/ephemeris/brdc0920.17n');
 
 %% plot vissible SV from postion on earth
 
-ROOTDIR = fileparts(get_lib_path);
+% ROOTDIR = fileparts(get_lib_path);
 
 ephFile = strcat(ROOTDIR,'/files/ephemeris/brdc0920.17n');
 image_file = fullfile(ROOTDIR,'/files/land_ocean_ice_2048.png');

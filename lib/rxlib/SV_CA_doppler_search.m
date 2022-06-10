@@ -41,7 +41,8 @@ for i = checkSV
 end
 
 
-detect_lim = L * 1023 * 2 / 5 - 1; % lowered threshold because of noise;
+% detect_lim = L * 1023 * 2 / 5 - 1; % lowered threshold because of noise;
+detect_lim = 1.4e4;
 [peak, rdelay_samples] = max(corrsearch, [], 3);
 %
 [peak, f_offset] = max(peak, [], 2);

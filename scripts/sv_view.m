@@ -1,7 +1,7 @@
 clc
 clear all
 
-ROOTDIR = fileparts(get_lib_path);
+ROOTDIR = pwd;
 
 ephFile = strcat(ROOTDIR,'/files/ephemeris/brdc0920.17n');
 image_file = fullfile(ROOTDIR,'/files/land_ocean_ice_2048.png');

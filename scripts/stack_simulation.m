@@ -5,19 +5,19 @@
 %
 % GPS STACK TOOLBOX
 % Javier Antoran & Alberto Mur
-% April 2017
+% April 2017PSD
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all 
 close all
 clc
 % set env variables
-ROOTDIR = fileparts(get_lib_path);
+ROOTDIR = pwd;
 almFile = strcat(ROOTDIR,'/files/almanac/W918.alm');
 ephFile = strcat(ROOTDIR,'/files/ephemeris/brdc0920.17n');
 
 % read rinex and set contextual parameters
 [eph, head] = read_rinex_nav(ephFile, 1:32);
-[~, gps_sec] = cal2gpstime([2017 04 04 16 51 30]);
+[~, gps_sec] = cal2gpstime([2022 04 04 16 51 30]);
 time = gps_sec + head.leapSeconds;
 satp = eph2ecef(eph, time);
 
@@ -26,14 +26,14 @@ WGS84.a = 6378137;
 WGS84.e2 = (8.1819190842622e-2).^2;
 
 %define receiver position
-Rpos = [ 3.894192036606761e+06 3.189618244369670e+05 5.024275884645306e+06]; % ECEF
+Rpos = [-1716.8762607353492e3 4990.71881057034e3  3569.290291592977e3]; % ECEF
 
 %get visible SV
 rcv_lla = [ 0 0 0 ];
 [rcv_lla(1), rcv_lla(2), rcv_lla(3)] = xyz2lla(Rpos(1), Rpos(2), Rpos(3), WGS84.a, WGS84.e2);
 e_mask = 30; %smallest angle between receiver and satellites for these to be visible 
 visible_SV = visible_sv( satp, rcv_lla, e_mask );
-%visible_SV = 1:32
+%visible_SV = 1:32;
 [eph, head] = read_rinex_nav(ephFile, visible_SV);
 %define constants
 c = 2.99792458e8;
@@ -43,7 +43,6 @@ base_clock = 10.23e6;
 L = 50; %samples per CA bit. fm = fchip * L. More renults ib better precision
 
 % GPS signal generation
-
 % generate C/A signals
 sCA = CA_gen(L, visible_SV);
 
@@ -60,23 +59,21 @@ sCA_dop = sCA .* doppler_carrier; %add doppler shift
 [delay_CA, cicles, prop_delay_0, sat_clock_offset_0, sat_clock_rel_0, iono_T_0, trop_T_equiv_0] = gps_channel(head, eph, time, Rpos, sCA_dop, L);
 srx = sum(delay_CA, 1);
 %% receiver: GPS signal decoding
-
 %set constants
 f_chip = base_clock / 10;
 fm = f_chip * L; %More results in better precision
 Tm = 1/fm;
-Lchip = 2 .^ 10 - 1;
+Lchip = 2.^ 10 - 1;
 Tchip = Lchip/f_chip;
 samples_chip = Lchip * L;
 
 %obtain SV postions:
 % phase and time: adquisition
-
 [ aquired, pr_delay_abs_samples, phase_delay ] = SV_CA_doppler_search( srx, L, 1e4, 5000);
 %plot_CA_fi_search(  srx, 23, L, 1e4, 500 )
 
 %%
-ROOTDIR = fileparts(get_lib_path);
+% ROOTDIR = fileparts(get_lib_path);
 almFile = strcat(ROOTDIR,'/files/almanac/W918.alm');
 ephFile = strcat(ROOTDIR,'/files/ephemeris/brdc0920.17n');
 

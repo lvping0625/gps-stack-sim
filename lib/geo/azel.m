@@ -20,7 +20,7 @@ lla2enu_tm = ltcmat(rcv_lla);
 
 los_enu = lla2enu_tm*los;
 
-% Azimuth from los
+% v from los
 azimuth = atan2(los_enu(1,:),los_enu(2,:));
 azimuth(azimuth<0) = azimuth(azimuth<0)+2*pi;
 
