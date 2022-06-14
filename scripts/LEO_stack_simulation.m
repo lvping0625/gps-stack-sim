@@ -1,11 +1,11 @@
-%% stack_simulation.m
+%% LEO_stack_simulation.m
 %C/A code transmission and receiver position acquisition simulation
 %This function should serve as an example of how to use some of the
 %toolkits funtions. 
 %
-% GPS STACK TOOLBOX
-% Javier Antoran & Alberto Mur
-% April 2017PSD
+% 这个是Dengly自己修改的
+%目的：学习gps-stack-sim的使用方法
+%基础：stack_simulation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all 
 close all
