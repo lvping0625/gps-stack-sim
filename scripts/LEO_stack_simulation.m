@@ -98,8 +98,6 @@ af = [eph.af0; eph.af1; eph.af2]';%bias, drift, drift rate
 Toc = eph.toc; %time of clock of specific satellite relative to deltaT
 % TOC IS UPDATED BY NAV MESSAGE i believe
 
-
-
 % SAT CLOCK RELATIVISTIC TIME CORRECTION non iterative
 A = eph.sqrtA.^2;
 meanAnomaly  = eph.M0;
@@ -139,11 +137,8 @@ while (norm(delta_x(1:3)) > 1)
     R_iono(i, :)=iono_T * c;   
     
     %tropospheric
-    
     R_trop(i, :) = Error_Tropospheric_Hopfield(T_amb,P_amb,P_vap, rec_pos, pSV);
-    
     % real range aprox
-    
     pseudo_range(i + 1, :) = pseudo_range0 -  R_c_offset(i, :) - R_iono(i, :) - R_trop(i, :);
     
     i = i + 1;
